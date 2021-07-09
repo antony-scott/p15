@@ -1,0 +1,59 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:viewmodels="clr-namespace:p15.ViewModels;assembly=p15"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="p15.Views.StartView">
+  <UserControl.Styles>
+    <Style Selector="TextBlock.Loading">
+      <Setter Property="FontSize" Value="{Binding LoadingThrobberFontSize}"/>
+      <Setter Property="Foreground" Value="{DynamicResource ThemeForegroundLowBrush}"/>
+      <Style.Animations>
+        <Animation Duration="0:0:2" IterationCount="INFINITE">
+          <KeyFrame Cue="0%">
+            <Setter Property="Opacity" Value="0.2"/>
+          </KeyFrame>
+          <KeyFrame Cue="50%">
+            <Setter Property="Opacity" Value="0.8"/>
+          </KeyFrame>
+          <KeyFrame Cue="100%">
+            <Setter Property="Opacity" Value="0.2"/>
+          </KeyFrame>
+        </Animation>
+      </Style.Animations>
+    </Style>
+    <Style Selector="StackPanel.Packages">
+      <Setter Property="IsVisible" Value="false"/>
+      <Setter Property="Opacity" Value="0.0"/>
+      <Setter Property="Transitions">
+        <Transitions>
+          <DoubleTransition Property="Opacity" Duration="0:0:1"/>
+        </Transitions>
+      </Setter>
+    </Style>
+    <Style Selector="StackPanel.Packages[IsVisible=true]">
+      <Setter Property="Opacity" Value="1.0"/>
+    </Style>
+  </UserControl.Styles>
+  <StackPanel>
+    <TextBlock Text="Please wait, Loading ..." Classes="Loading" IsVisible="{Binding IsLoadingMessageVisible}" />
+    <StackPanel IsVisible="{Binding !IsLoadingMessageVisible}" Classes="Packages">
+      <TextBlock Text="Welcome to p15!" Foreground="{DynamicResource ThemeForegroundBrush}" FontSize="{Binding FontSize}"/>
+      <TextBlock Text="Please select a package to work on" Foreground="{DynamicResource ThemeForegroundLowBrush}" FontSize="{Binding FontSize}"/>
+      <ItemsControl Items="{Binding PackageNames, Mode=OneWay}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <StackPanel Orientation="Horizontal">
+              <Button Command="{Binding $parent[ItemsControl].DataContext.LoadPackage}"
+                      CommandParameter="{Binding}"
+                      Content="{Binding}"
+                      FontSize="{Binding $parent[UserControl].DataContext.PackageButtonFontSize}"
+                      Classes="text borderless"/>
+            </StackPanel>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+      </ItemsControl>     
+    </StackPanel>
+  </StackPanel>
+</UserControl>

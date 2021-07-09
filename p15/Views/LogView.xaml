@@ -1,0 +1,40 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:ribbon="clr-namespace:Avalonia.Controls.Ribbon;assembly=Avalonia.Controls.Ribbon"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:p15.Views"
+             mc:Ignorable="d" d:DesignWidth="300" d:DesignHeight="450"
+             x:Class="p15.Views.LogView">
+  <UserControl.Styles>
+    <Style Selector="ListBoxItem">
+      <Setter Property="Padding" Value="0"/>
+    </Style>
+  </UserControl.Styles>
+  <DockPanel>
+    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top" Margin="0,10,0,0">
+      <Button Content="Clear" Command="{Binding Clear}"/>
+      <CheckBox IsChecked="{Binding AutoScrollEnabled}" Content="Auto Scroll"/>
+    </StackPanel>
+    <ListBox Name="LogEntries"
+             Items="{Binding LogEntries}"
+             VirtualizationMode="Simple"
+             ScrollViewer.VerticalScrollBarVisibility="Auto"
+             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+             Grid.IsSharedSizeScope="True">
+      <ListBox.ItemsPanel>
+        <ItemsPanelTemplate>
+          <VirtualizingStackPanel />
+        </ItemsPanelTemplate>
+      </ListBox.ItemsPanel>
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <Border Classes="LogEntry" IsVisible="{Binding IsVisible}" Padding="2,1,2,1">
+            <views:LogEntryView FontSize="{Binding $parent[UserControl].FontSize}"
+                                FontFamily="{Binding $parent[UserControl].FontFamily}"/>
+          </Border>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+  </DockPanel>
+</UserControl>

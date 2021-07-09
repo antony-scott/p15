@@ -1,0 +1,78 @@
+﻿<Application xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:p15"
+             xmlns:valueConverters="clr-namespace:p15.ValueConverters"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
+             x:Class="p15.App">
+  <Application.DataTemplates>
+    <local:ViewLocator/>
+  </Application.DataTemplates>
+
+  <Application.Styles>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/DefaultTheme.xaml"/>
+    <StyleInclude Source="avares://Avalonia.Themes.Default/Accents/BaseDark.xaml"/>
+    <StyleInclude Source="avares://Dock.Avalonia.Themes.Default/DefaultTheme.axaml"/>
+    <StyleInclude Source="avares://Avalonia.Controls.DataGrid/Themes/Default.xaml"/>
+    <StyleInclude Source="avares://p15/Icons/FontAwesome.xaml"/>
+    <StyleInclude Source="avares://Material.Icons.Avalonia/App.xaml"/>
+    <Style Selector="Button">
+      <Setter Property="Cursor" Value="Hand"/>
+      <Setter Property="Margin" Value="5"/>
+      <Setter Property="Padding" Value="3,1,3,1"/>
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+    </Style>
+    <Style Selector="Button.borderless">
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="HorizontalAlignment" Value="Stretch"/>
+    </Style>
+    <Style Selector="Button.fa">
+      <Setter Property="Foreground" Value="White"/>
+      <Setter Property="Background" Value="Transparent"/>
+      <Setter Property="BorderThickness" Value="0"/>
+      <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}"/>
+    </Style>
+    <Style Selector="Border.lozenge">
+      <Setter Property="BorderThickness" Value="1"/>
+      <Setter Property="BorderBrush" Value="White"/>
+      <Setter Property="Margin" Value="10"/>
+      <Setter Property="CornerRadius" Value="5"/>
+      <Setter Property="Padding" Value="5"/>
+    </Style>
+    <Style Selector=".small TextBlock">
+      <Setter Property="FontSize" Value="{DynamicResource FontSizeSmall}"/>
+      <Setter Property="Height" Value="{DynamicResource TextBlockHeightSmall}"/>
+    </Style>
+    <Style Selector=".normal TextBlock">
+      <Setter Property="FontSize" Value="{DynamicResource FontSizeNormal}"/>
+      <Setter Property="Height" Value="{DynamicResource TextBlockHeightNormal}"/>
+    </Style>
+    <Style Selector=".large TextBlock">
+      <Setter Property="FontSize" Value="{DynamicResource FontSizeLarge}"/>
+      <Setter Property="Height" Value="{DynamicResource TextBlockHeightLarge}"/>
+    </Style>
+    <Style Selector="TextBlock.logentry">
+      <Setter Property="FontFamily" Value="Consolas"/>
+      <Setter Property="VerticalAlignment" Value="Top"/>
+    </Style>
+  </Application.Styles>
+
+  <Application.Resources>
+    <ResourceDictionary>
+      <ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary>
+          <valueConverters:ProcessRunningConverter x:Key="ProcessRunningConverter"/>
+          <valueConverters:DateTimeConverter x:Key="DateTimeConverter"/>
+          <valueConverters:BoolToWrapConverter x:Key="BoolToWrapConverter"/>
+        </ResourceDictionary>
+        <ResourceDictionary>
+          <sys:Double x:Key="TextBlockHeightSmall">14</sys:Double>
+          <sys:Double x:Key="TextBlockHeightNormal">16</sys:Double>
+          <sys:Double x:Key="TextBlockHeightLarge">20</sys:Double>
+        </ResourceDictionary>
+      </ResourceDictionary.MergedDictionaries>
+    </ResourceDictionary>
+  </Application.Resources>
+</Application>

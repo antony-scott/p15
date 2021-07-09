@@ -1,0 +1,81 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:vm="clr-namespace:p15.ViewModels;assembly=p15"
+             xmlns:dd="clr-namespace:p15.DesignData;assembly=p15"
+             mc:Ignorable="d" d:DesignWidth="600" d:DesignHeight="400"
+             x:Class="p15.Views.ErrorsView">
+  <Design.DataContext>
+    <dd:TestErrors/>
+  </Design.DataContext>
+  <Grid Name="grid"
+        RowDefinitions="Auto,*,Auto,Auto,*" ColumnDefinitions="*">
+    <Grid.Styles>
+      <Style Selector="#grid TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+      </Style>
+      <Style Selector="#grid DataGridCell:pointerover TextBlock">
+        <Setter Property="Foreground" Value="Black"/>
+      </Style>
+    </Grid.Styles>
+    <StackPanel Grid.Row="0" Grid.Column="0"
+                Orientation="Horizontal">
+      <Button Content="Clear Errors" Command="{Binding ClearErrors}"/>
+    </StackPanel>
+    <DataGrid Grid.Row="1" Grid.Column="0"
+              Name="errors"
+              Items="{Binding Errors}"
+              CanUserResizeColumns="True" CanUserReorderColumns="True">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Application"
+                            Binding="{Binding ApplicationName}"
+                            Width="*" />
+        <DataGridTextColumn Header="Timestamp"
+                            Binding="{Binding Timestamp, Converter={StaticResource DateTimeConverter}}"
+                            Width="150"/>
+      </DataGrid.Columns>
+    </DataGrid>
+    <StackPanel Grid.Row="2" Grid.Column="0"
+                Orientation="Horizontal"
+                IsVisible="{Binding #errors.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <CheckBox Name="wordwrap" Content="Wrap" IsChecked="False" Margin="10,0,20,0"/>
+      <Button Content="Copy to clipboard"
+              IsEnabled="{Binding #errors.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}"
+              Command="{Binding CopyToClipboard}"
+              CommandParameter="{Binding #errors.SelectedItem.Error}"/>
+    </StackPanel>
+    <Grid Grid.Row="3" Grid.Column="0"
+          RowDefinitions="Auto,Auto" ColumnDefinitions="*,150"
+          Margin="5"
+          IsVisible="{Binding #errors.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBlock Grid.Row="0" Grid.Column="0" Text="Application" FontWeight="Bold"/>
+      <TextBlock Grid.Row="0" Grid.Column="1" Text="Timestamp" FontWeight="Bold"/>
+      <TextBlock Grid.Row="1" Grid.Column="0" Text="{Binding #errors.SelectedItem.ApplicationName}"/>
+      <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding #errors.SelectedItem.Timestamp, Converter={StaticResource DateTimeConverter}}"/>
+    </Grid>
+    <TextBox Grid.Row="4" Grid.Column="0"
+             FontFamily="Consolas"
+             Margin="10"
+             Text="{Binding #errors.SelectedItem.Error}"
+             TextWrapping="{Binding #wordwrap.IsChecked, Converter={StaticResource BoolToWrapConverter}}"
+             ScrollViewer.VerticalScrollBarVisibility="Auto"
+             ScrollViewer.HorizontalScrollBarVisibility="Auto"
+             IsVisible="{Binding #errors.SelectedItem, Converter={x:Static ObjectConverters.IsNotNull}}">
+      <TextBox.Styles>
+        <Style Selector="TextBox">
+          <Setter Property="Template">
+            <ControlTemplate>
+              <ScrollViewer HorizontalScrollBarVisibility="Auto"
+                            VerticalScrollBarVisibility="Auto">
+                <TextPresenter Name="PART_TextPresenter"
+                               TextWrapping="{TemplateBinding TextWrapping}"
+                               Text="{TemplateBinding Text}" />
+              </ScrollViewer>
+            </ControlTemplate>
+          </Setter>
+        </Style>
+      </TextBox.Styles>      
+    </TextBox>
+  </Grid>
+</UserControl>

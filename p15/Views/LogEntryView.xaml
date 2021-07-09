@@ -1,0 +1,71 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:i="clr-namespace:Avalonia.Xaml.Interactivity;assembly=Avalonia.Xaml.Interactivity"
+             xmlns:ia="clr-namespace:Avalonia.Xaml.Interactions.Core;assembly=Avalonia.Xaml.Interactions"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:p15.Views;assembly=p15"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="p15.Views.LogEntryView">
+  <Grid Name="grid" Margin="0">
+    <Grid.Styles>
+      <Style Selector="#grid TextBlock">
+        <Setter Property="Foreground" Value="{Binding Colour}"/>
+      </Style>
+      <Style Selector="#grid:pointerover TextBlock">
+        <Setter Property="Foreground" Value="White"/>
+      </Style>
+    </Grid.Styles>
+    <i:Interaction.Behaviors>
+      <ia:EventTriggerBehavior EventName="Tapped" SourceObject="{Binding #grid}">
+        <ia:InvokeCommandAction Command="{Binding ToggleMessage}"/>
+      </ia:EventTriggerBehavior>
+    </i:Interaction.Behaviors>
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="Auto" SharedSizeGroup="A"/>
+      <ColumnDefinition Width="Auto" SharedSizeGroup="B"/>
+      <ColumnDefinition Width="Auto" SharedSizeGroup="C"/>
+      <ColumnDefinition Width="*" SharedSizeGroup="D"/>
+    </Grid.ColumnDefinitions>
+    <TextBlock
+      Grid.Row="0" Grid.Column="0"
+      Text="{Binding Timestamp, Converter={StaticResource DateTimeConverter}}"
+      FontSize="{Binding $parent[views:LogView].DataContext.FontSize}"
+      FontFamily="{Binding $parent[views:LogView].DataContext.FontFamily}"
+      Width="{Binding $parent[views:LogView].DataContext.TimestampColumnWidth}"
+      HorizontalAlignment="Left"
+      Margin="5,0,25,0"
+      Classes="logentry"/>
+    <TextBlock
+      Grid.Row="0" Grid.Column="1"
+      Text="{Binding Severity}"
+      IsVisible="{Binding IsTopLevel}"
+      FontSize="{Binding $parent[views:LogView].DataContext.FontSize}"
+      FontFamily="{Binding $parent[views:LogView].DataContext.FontFamily}"
+      Width="{Binding $parent[views:LogView].DataContext.SeverityColumnWidth}"
+      HorizontalAlignment="Left"
+      Margin="0,0,20,0"
+      Classes="logentry"/>
+    <TextBlock
+      Grid.Row="0" Grid.Column="1"
+      Width="{Binding $parent[views:LogView].DataContext.SeverityColumnWidth}"
+      Margin="0,0,20,0"
+      IsVisible="{Binding !IsTopLevel}"/>
+    <TextBlock
+      Grid.Row="0" Grid.Column="2"
+      Text="{Binding ToggleIndicatorText}"
+      FontSize="{Binding $parent[views:LogView].DataContext.FontSize}"
+      FontFamily="{Binding $parent[views:LogView].DataContext.FontFamily}"
+      Width="{Binding $parent[views:LogView].DataContext.ToggleIndicatorColumnWidth}"
+      HorizontalAlignment="Left"
+      Classes="logentry"/>
+    <TextBlock
+      Name="message"
+      Grid.Row="0" Grid.Column="3"
+      Text="{Binding Message}"
+      FontSize="{Binding $parent[views:LogView].DataContext.FontSize}"
+      FontFamily="{Binding $parent[views:LogView].DataContext.FontFamily}"
+      HorizontalAlignment="Left"
+      Classes="logentry"/>
+  </Grid>
+</UserControl>

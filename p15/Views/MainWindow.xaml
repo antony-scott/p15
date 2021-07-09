@@ -1,0 +1,42 @@
+﻿<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:p15.ViewModels;assembly=p15"
+        xmlns:dock="clr-namespace:Dock.Avalonia.Controls;assembly=Dock.Avalonia"
+        xmlns:ribbon="clr-namespace:Avalonia.Controls.Ribbon;assembly=Avalonia.Controls.Ribbon"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="500" d:DesignHeight="300"
+        x:Class="p15.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="p15">
+
+    <DockPanel>
+        <Grid ColumnDefinitions="*,Auto" DockPanel.Dock="Top">
+            <Menu Items="{Binding MenuItems}" Grid.Row="0" Grid.Column="0">
+                <Menu.Styles>
+                    <Style Selector="MenuItem">
+                        <Setter Property="Header" Value="{Binding Header}"/>
+                        <Setter Property="Items" Value="{Binding Items}"/>
+                        <Setter Property="Command" Value="{Binding Command}"/>
+                        <Setter Property="CommandParameter" Value="{Binding CommandParameter}"/>
+                        <Setter Property="FontSize" Value="{Binding $parent[Window].DataContext.FontSize}"/>
+                        <Setter Property="Icon" Value="{Binding Icon}"/>
+                    </Style>
+                </Menu.Styles>
+            </Menu>
+            <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                <TextBlock Text="UI Scale: "/>
+                <Slider Minimum="50" Maximum="200"
+                        SmallChange="10"
+                        LargeChange="10"
+                        Value="{Binding UiScale, Mode=TwoWay}"
+                        Width="300"
+                        TickFrequency="10"
+                        IsSnapToTickEnabled="True" />
+                <TextBlock Text="{Binding UiScale}"/>
+                <TextBlock Text="%"/>
+            </StackPanel>
+        </Grid>
+        <dock:DockControl Layout="{Binding Layout}" />
+    </DockPanel>
+</Window>

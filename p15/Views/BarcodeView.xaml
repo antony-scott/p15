@@ -1,0 +1,28 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:p15.Views;assembly=p15"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="p15.Views.BarcodeView">
+  <Border Classes="lozenge"
+          Background="{Binding IsRunning, Converter={StaticResource ProcessRunningConverter}}"
+          Padding="5">
+    <StackPanel Orientation="Vertical">
+      <TextBlock Text="{Binding Name}" FontSize="{Binding $parent[views:BarcodesView].DataContext.LargeFontSize}" FontWeight="Bold"/>
+      <TextBlock Text="{Binding Symbology}" FontSize="{Binding $parent[views:BarcodesView].DataContext.FontSize}"/>
+      <ItemsControl Items="{Binding Values}">
+        <ItemsControl.ItemTemplate>
+          <DataTemplate>
+            <Button Content="{Binding Key}" Command="{Binding $parent[StackPanel].DataContext.SendCommand}" CommandParameter="{Binding Key}" FontSize="{Binding $parent[views:BarcodesView].DataContext.FontSize}"/>
+          </DataTemplate>
+        </ItemsControl.ItemTemplate>
+        <ItemsControl.ItemsPanel>
+          <ItemsPanelTemplate>
+            <StackPanel Orientation="Vertical"/>
+          </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+      </ItemsControl>
+    </StackPanel>
+  </Border>
+</UserControl>

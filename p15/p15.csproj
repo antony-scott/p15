@@ -1,0 +1,146 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <SignAssembly>false</SignAssembly>
+    <PublishSingleFile>true</PublishSingleFile>
+    <RuntimeIdentifier>win10-x64</RuntimeIdentifier>
+    <PublishTrimmed>true</PublishTrimmed>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="**\*.xaml.cs">
+      <DependentUpon>%(Filename)</DependentUpon>
+    </Compile>
+    <AvaloniaResource Include="**\*.xaml">
+      <SubType>Designer</SubType>
+    </AvaloniaResource>
+    <AvaloniaResource Include="Assets\**" />
+  </ItemGroup>
+  <ItemGroup>
+    <AvaloniaResource Remove="Assets\p15.psd1" />
+    <AvaloniaResource Remove="Assets\p15.psm1" />
+    <AvaloniaResource Remove="Views\AppsView.xaml" />
+    <AvaloniaResource Remove="Views\AppView.xaml" />
+    <AvaloniaResource Remove="Views\BarcodesView.xaml" />
+    <AvaloniaResource Remove="Views\BarcodeView.xaml" />
+    <AvaloniaResource Remove="Views\ErrorsView.xaml" />
+    <AvaloniaResource Remove="Views\LogEntryView.xaml" />
+    <AvaloniaResource Remove="Views\LogView.xaml" />
+    <AvaloniaResource Remove="Views\MarkdownView.xaml" />
+    <AvaloniaResource Remove="Views\StartView.xaml" />
+    <AvaloniaResource Remove="Views\TraceOutputView.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Icons\FontAwesome.xaml" />
+    <None Remove="p15.config.json" />
+    <None Remove="README.md" />
+    <None Remove="Views\AppsView.xaml" />
+    <None Remove="Views\AppView.xaml" />
+    <None Remove="Views\BarcodesView.xaml" />
+    <None Remove="Views\BarcodeView.xaml" />
+    <None Remove="Views\ErrorsView.xaml" />
+    <None Remove="Views\LogEntryView.xaml" />
+    <None Remove="Views\LogView.xaml" />
+    <None Remove="Views\MarkdownView.xaml" />
+    <None Remove="Views\StartView.xaml" />
+    <None Remove="Views\TraceOutputView.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="p15.config.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="Avalonia" Version="0.10.0" />
+    <PackageReference Include="Avalonia.Controls.DataGrid" Version="0.10.0" />
+    <PackageReference Include="Avalonia.Desktop" Version="0.10.0" />
+    <PackageReference Include="Avalonia.ReactiveUI" Version="0.10.0" />
+    <PackageReference Include="Avalonia.Xaml.Behaviors" Version="0.10.0" />
+    <PackageReference Include="Avalonia.Xaml.Interactions" Version="0.10.0" />
+    <PackageReference Include="Avalonia.Xaml.Interactions.Custom" Version="0.10.0" />
+    <PackageReference Include="Avalonia.Xaml.Interactivity" Version="0.10.0" />
+    <PackageReference Include="Barcoder" Version="1.0.0.86" />
+    <PackageReference Include="Barcoder.Renderer.Image" Version="1.0.0.86" />
+    <PackageReference Include="Dock.Avalonia" Version="0.10.0" />
+    <PackageReference Include="Dock.Avalonia.Themes.Default" Version="0.10.0" />
+    <PackageReference Include="Dock.Model.ReactiveUI" Version="0.10.0" />
+    <PackageReference Include="Dock.Serializer" Version="0.10.0" />
+    <PackageReference Include="Markdig.Wpf" Version="0.5.0.1" />
+    <PackageReference Include="Material.Icons.Avalonia" Version="1.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.FileExtensions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="5.0.1" />
+    <PackageReference Include="Microsoft.Extensions.FileProviders.Embedded" Version="5.0.3" />
+    <PackageReference Include="Microsoft.Extensions.Options" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="5.0.0" />
+    <PackageReference Include="Microsoft.Web.Administration" Version="11.1.0" />
+    <PackageReference Include="Quartz" Version="3.1.0" />
+    <PackageReference Include="ReactiveUI" Version="13.2.2" />
+    <PackageReference Include="RestSharp" Version="106.11.7" />
+    <PackageReference Include="SharpYaml" Version="1.6.6" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\FontAwesome.xaml" />
+    <EmbeddedResource Include="Views\StartView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AppsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\TraceOutputView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\AppView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\MarkdownView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\LogEntryView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\LogView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BarcodesView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\BarcodeView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Views\ErrorsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\p15.Core\p15.Core.csproj">
+      <CopyLocalSatelliteAssemblies>true</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="Assets\p15.ps1">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+</Project>

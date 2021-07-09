@@ -1,0 +1,124 @@
+﻿<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:views="clr-namespace:p15.Views;assembly=p15"
+             xmlns:avalonia="clr-namespace:Material.Icons.Avalonia;assembly=Material.Icons.Avalonia"
+             mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+             x:Class="p15.Views.AppView">
+    <Border Classes="lozenge"
+            Background="{Binding IsRunning, Converter={StaticResource ProcessRunningConverter}}"
+            Padding="10" Width="{Binding $parent[views:AppsView].DataContext.LozengeWidth}" MinWidth="100">
+        <Border.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Open IDE" Command="{Binding OpenIDE}" IsVisible="{Binding ProjectFolderExists}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Visualstudio"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <!--<MenuItem Header="View Readme" Command="{Binding ViewReadme}"/>-->
+                <MenuItem Header="Start" Command="{Binding Start}" IsVisible="{Binding ProcessCanBeStarted}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Play"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Stop" Command="{Binding Stop}" IsVisible="{Binding ProcessCanBeStopped}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Stop"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Sync (Pull)" Command="{Binding PullFolder}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Sync"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Sync (Push)" Command="{Binding PushFolder}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Sync"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Build" Command="{Binding Build}" IsVisible="{Binding ProjectFolderExists}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Build"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Purge bin/obj folders" Command="{Binding PurgeBinObjFolders}" IsVisible="{Binding BinariesExist}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Eraser"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Terminal" Command="{Binding Terminal}" IsVisible="{Binding PathExists}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Terminal"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Terminal (Binaries Folder)" Command="{Binding TerminalInBinariesFolder}" IsVisible="{Binding BinariesExist}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Terminal"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Open Folder" Command="{Binding OpenFolder}" IsVisible="{Binding PathExists}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="FolderOpenOutline"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Open Binaries Folder" Command="{Binding OpenBinariesFolder}" IsVisible="{Binding BinariesExist}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="FolderCog"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Open Logs Folder" Command="{Binding OpenLogsFolder}" IsVisible="{Binding HasLogging}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="FolderTable"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Monitor Logs" Command="{Binding MonitorLogs}" IsVisible="{Binding HasLogging}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="FileTable"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Message Queues" Command="{Binding MessageQueues}" IsVisible="{Binding PathExists}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Queue"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Browse" Command="{Binding Browse}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Git"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="Refresh" Command="{Binding Refresh}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}">
+                    <MenuItem.Icon>
+                        <avalonia:MaterialIcon Kind="Refresh"/>
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </Border.ContextMenu>
+        <StackPanel Orientation="Vertical">
+            <Grid ColumnDefinitions="*,Auto" RowDefinitions="Auto" Margin="5,2,0,2">
+                <TextBlock Grid.Row="0" Grid.Column="0" Text="{Binding Name}" FontSize="{Binding $parent[views:AppsView].DataContext.MediumTextFontSize}" ToolTip.Tip="{Binding Name}" VerticalAlignment="Center"/>
+                <Button Grid.Row="0" Grid.Column="1" Content="{Binding SourceType}" Width="30" Command="{Binding BrowseSource}" ToolTip.Tip="{Binding Source}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+            </Grid>
+            <StackPanel Orientation="Vertical" IsVisible="{Binding !PathExists}">
+                <Button Content="BOOTSTRAP" Background="Green" Command="{Binding Go}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+            </StackPanel>
+            <Grid ColumnDefinitions="Auto,*" RowDefinitions="Auto">
+                <StackPanel Grid.Row="0" Grid.Column="0" Width="80">
+                    <Button Content="Start" IsVisible="{Binding ProcessCanBeStarted}" Command="{Binding Start}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+                    <Button Content="Stop" IsVisible="{Binding ProcessCanBeStopped}" Command="{Binding Stop}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+                    <Button Content="Logs" IsVisible="{Binding HasCustomLogging}" Command="{Binding StartCustomLogging}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+                </StackPanel>
+                <StackPanel Grid.Row="0" Grid.Column="1" Orientation="Vertical" IsVisible="{Binding IsRunning}" VerticalAlignment="Bottom" HorizontalAlignment="Right">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                        <TextBlock Text="Process Id = " FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+                        <TextBlock Text="{Binding ProcessId}" Width="{Binding $parent[views:AppsView].DataContext.ProcessInfoWidth}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" IsVisible="{Binding IsWeb}" HorizontalAlignment="Right">
+                        <TextBlock Text="Port Number = " FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+                        <TextBlock Text="{Binding PortNumber}" Width="{Binding $parent[views:AppsView].DataContext.ProcessInfoWidth}" FontSize="{Binding $parent[views:AppsView].DataContext.TextFontSize}"/>
+                    </StackPanel>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+    </Border>
+</UserControl>
